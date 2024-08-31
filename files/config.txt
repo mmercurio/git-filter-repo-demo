@@ -3,5 +3,4 @@
 SOURCE_DIR=~/src
 GIT_REPO=git-filter-repo
 GIT_USER=git
-GIT_TOKEN=WGPmAapt4Bz04fNJVQyCYNpRjmg5ac0g
 GIT_BIN=/usr/bin/git
