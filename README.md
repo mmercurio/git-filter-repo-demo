@@ -5,12 +5,15 @@ This repo demonstrates how to use [git-filter-repo](https://github.com/newren/gi
 
 In addition to removing sensitive data from individual files, we'll also ensure data are removed from git commit history.
 
+For comparsison with [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/), see [bfg-test-repo](https://github.com/mmercurio/bfg-test-repo).
+
 # Table of Contents
 - [Initial State](#initial-state)
 - [Initial Clean-up](#initial-clean-up)
 - [Rewrite History with git-filter-repo](#rewrite-history-with-git-filter-repo)
   - [Removing Files](#removing-files)
   - [Remove Secrets from Files](#remove-secrets-from-files)
+  - [Rewriting Commit Author](#rewriting-commit-author)
 - [Pushing Changes to the Remote](#pushing-changes-to-the-remote)
 
 ## Initial State
@@ -419,6 +422,40 @@ index 82de8af..68de0ea 100644
  GIT_BIN=/usr/bin/git
 ```
 
+### Rewriting Commit Author
+
+It's also possivle to update commit messages and metadata such as the commit author.
+
+In this example, we'll update all commits to replace my real email address with `mmercurio@users.noreply.github.com`.
+
+To do that we'll use the `--mailmap` option together with a `mailmap.txt` file specifying the old and new email addresses.
+
+See the git-filter-repo(1) Manual Page for details and format of the file, but in our simple examle to replace old email address with a new email address, it looks like this:
+
+```
+Real Name  <new-email@users.noreply.github.com>  <old-email@example.com>
+```
+
+And then to make the changes:
+
+```shell
+git filter-repo --mailmap ../mailmap.txt
+```
+
+Additionally, the email address shown in the README examples should also be updated to match. Ths can be done with the `--replace-text` option we say earlier to replace secrets. This time we'll also specify the replacement text to use intsead of the default `***REMOVED***`. To do that we'll create a mapping file, `expressions.txt` with the following format to replace occrances of `OLD VALUE` with `NEW VALUE`, using the appropriate email address replacement.
+
+```
+OLD VALUE==>NEW VALUE
+```
+
+And then make the changes:
+
+```shell
+git filter-repo --replace-text ../expressions.txt
+```
+
+Note, these changes won't show up in *this* repo, since all rewrites were pushed to a separate results repo, can can be found below.
+
 ## Pushing Changes to the Remote
 
 Before pushing changes to the remote, examine the contents of the repo carefully. You'll likely want to look at the `.git/filter-repo/commit-map` to examine the old and new commit hashes that have been rewritten.
@@ -446,4 +483,4 @@ To github.com:mmercurio/git-filter-repo-demo-filtered.git
  * [new branch]      rm_git_token -> rm_git_token
 ```
 
-The results can be examined at [git-filter-repo-demo-filtered](https://github.com/mmercurio/git-filter-repo-demo-filtered).
+The results can all be examined at [git-filter-repo-demo-filtered](https://github.com/mmercurio/git-filter-repo-demo-filtered).
