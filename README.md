@@ -281,7 +281,7 @@ anyway, use --force.
 
 and you followed the command above to start with a fresh clone, you may need to add the `--force` option, which is safe *provided you started from a fresh clone*. For more information on this, see [FRESHCLONE](https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html#FRESHCLONE) in the git-filter-repo(1) Manual Page.
 
-Let's repeat the steps above in to verify all traces of the files are removed:
+Let's repeat the steps above to verify all traces of the files are removed:
 
 ```shell
 $ git log newbranch
@@ -442,7 +442,7 @@ And then to make the changes:
 git filter-repo --mailmap ../mailmap.txt
 ```
 
-Additionally, the email address shown in the README examples should also be updated to match. Ths can be done with the `--replace-text` option we say earlier to replace secrets. This time we'll also specify the replacement text to use intsead of the default `***REMOVED***`. To do that we'll create a mapping file, `expressions.txt` with the following format to replace occrances of `OLD VALUE` with `NEW VALUE`, using the appropriate email address replacement.
+Additionally, the email address shown in the README examples should also be updated to match. Ths can be done with the `--replace-text` option we used earlier to replace secrets. This time we'll also specify the replacement text to use intsead of the default `***REMOVED***`. To do that we'll create a mapping file, `expressions.txt` with the following format to replace occrances of `OLD VALUE` with `NEW VALUE`, using the appropriate email address replacement.
 
 ```
 OLD VALUE==>NEW VALUE
